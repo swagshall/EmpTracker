@@ -15,8 +15,13 @@ const connection = mysql.createConnection(
     console.log(`Connected to the emps_db database.`)
   );
 
-  //call to index function 
-  index();
+  connection.connect(function(err) {
+    if (err) throw err
+    console.log("Connected as Id" + connection.threadId)
+    index();
+  })
+
+
 
   //cre8ting the index function 
   function index(){
@@ -87,7 +92,7 @@ const connection = mysql.createConnection(
   //----viewAllEmployees()-----
   function viewAllEmployees() {
       console.log("in viewAllEmployees()");
-      connection.query("SELECT emps.firstName, emps.lastName, roles.title, roles.salary, departments.name, CONCAT(emps.firstName, ' ' ,emps.lastName) AS Manager FROM emps INNER JOIN roles on roles.id = emps.role_id INNER JOIN departments on departments.id = roles.dep_id left join emps e on emps.manager_id = e.id;", 
+      connection.query("SELECT emps.firstName, emps.lastName, roles.title, roles.salary, departments.name AS department, CONCAT(emps.firstName, ' ' ,emps.lastName) AS Manager FROM emps INNER JOIN roles on roles.id = emps.role_id INNER JOIN departments on departments.id = roles.dep_id left join emps e on emps.manager_id = e.id;", 
     function(err, res) {
       if (err) throw err
       console.table(res)
@@ -114,7 +119,7 @@ const connection = mysql.createConnection(
   function viewAllRoles() {
       console.log("In viewAllRoles()")
 
-      connection.query("SELECT id, title, salary FROM roles",
+      connection.query("SELECT id, title, salary FROM roles;",
       function(err, res) {
         if (err) throw err
         console.table(res)
@@ -130,13 +135,15 @@ const connection = mysql.createConnection(
   //----viewAllDeps()---
   function viewAllDeps() {
       console.log("In viewAllDeps()")
-      connection.query("SELECT * FROM departments",
+
+      connection.query("SELECT id, name FROM departments;",
       function(err, res) {
         if (err) throw err
         console.table(res)
         index()
     })
   }
+
 
   //----addDep()-----
   function addDep() {

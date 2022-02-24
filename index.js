@@ -114,6 +114,13 @@ const db = mysql.createConnection(
   //----viewAllRoles()---
   function viewAllRoles() {
       console.log("In viewAllRoles()")
+
+      connection.query("SELECT id, title, salary FROM roles",
+      function(err, res) {
+        if (err) throw err
+        console.table(res)
+        startPrompt()
+    })
   }
 
   //----addRole()----
@@ -124,6 +131,12 @@ const db = mysql.createConnection(
   //----viewAllDeps()---
   function viewAllDeps() {
       console.log("In viewAllDeps()")
+      connection.query("SELECT * FROM departments",
+      function(err, res) {
+        if (err) throw err
+        console.table(res)
+        startPrompt()
+    })
   }
 
   //----addDep()-----

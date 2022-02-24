@@ -85,4 +85,54 @@ const db = mysql.createConnection(
 
 
   //functions for each switch case 
+  //----viewAllEmployees()-----
+  function viewAllEmployees() {
+      console.log("in viewAllEmployees()");
+  }
+
+  //----addEmps()------
+  function addEmps() {
+      console.log("In addEmps()");
+  }
+
+  //----removeEmps()---
+  function removeEmps() {
+      console.log("In removeEmps()")
+  }
+
+  //----updateEmpRole()---
+  function updateEmpRole() {
+      console.log("In updateEmpRole()")
+  }
+
+  //----viewAllRoles()---
+  function viewAllRoles() {
+      console.log("In viewAllRoles()")
+  }
+
+  //----addRole()----
+  function addRole() {
+      console.log("In addRole()")
+  }
+
+  //----viewAllDeps()---
+  function viewAllDeps() {
+      console.log("In viewAllDeps()")
+  }
+
+  //----addDep()-----
+  function addDep() {
+      console.log("In addDep()")
+  }
+
+  //---removeDep()--
+  function removeDep() {
+      console.log("In removeDep()")
+  }
+
+  //----addEmps()---
+  function addEmps() {
+      console.log("In addEmps()")
+  }
+
   

@@ -88,6 +88,12 @@ const db = mysql.createConnection(
   //----viewAllEmployees()-----
   function viewAllEmployees() {
       console.log("in viewAllEmployees()");
+      connection.query("SELECT emps.firstName, emps.lastName, roles.title, roles.salary, departments.name, CONCAT(emps.firstName, ' ' ,emps.lastName) AS Manager FROM employee INNER JOIN roles on roles.id = emps.role_id INNER JOIN departments on department.id = role.dep_id left join emps e on emps.manager_id = e.id;", 
+    function(err, res) {
+      if (err) throw err
+      console.table(res)
+      startPrompt()
+  })
   }
 
   //----addEmps()------

@@ -5,12 +5,10 @@ const consTable = require('console.table');
 // console.log("hiiii");
 
 //cr8 the connection to the sql db
-const db = mysql.createConnection(
+const connection = mysql.createConnection(
     {
       host: 'localhost',
-      // MySQL username,
       user: 'root',
-      // MySQL password
       password: 'Chemdas.1',
       database: 'emps_db'
     },
@@ -32,10 +30,11 @@ const db = mysql.createConnection(
             "View All Roles", "Add a Role", "View all Departments", "Add a Department",  "Remove a Department", 
             "View all Employees",  "Quit"]
         })
-  .then(function(choice) {
-    switch (choice) {
+  .then(function(ans) {
+    switch (ans.index) {
         case "View All Employees":
           viewAllEmployees();
+          console.log("choice made")
         break;
 
         case "Add Employee":

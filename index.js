@@ -16,3 +16,20 @@ const db = mysql.createConnection(
     },
     console.log(`Connected to the emps_db database.`)
   );
+
+  //call to index function 
+  index();
+
+  //cre8ting the index function 
+  function index(){
+      console.log('in menu funtion');
+      inquirer
+        .prompt({
+            name: "index",
+            type: "list",
+            message: "What would you like to do?",
+            choices: ["View all Employees","Add Employee",  "Remove an Employee", "Update Employee Role",  
+            "View All Roles", "Add a Role", "View all Departments", "Add a Department",  "Remove a Department", 
+            "View all Employees",  "Quit"]
+        })
+  }

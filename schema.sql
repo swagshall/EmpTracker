@@ -1,1 +1,32 @@
+DROP DATABASE IF EXISTS emps_db;
+CREATE DATABASE emps_db;
+
+
+USE emps_db; 
+
+CREATE TABLE departments (
+  id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  name VARCHAR(30) NOT NULL
+);
+
+CREATE TABLE roles(
+id INT NOT NULL AUTO_INCREMENT PRIMARY KEY, 
+title VARCHAR (30) NOT NULL,
+salary DECIMAL (10.2) NOT NULL, 
+dep_id INT NOT NULL,
+ FOREIGN KEY (dep_id)
+REFERENCES departments(id) 
+);
+
+CREATE TABLE emps( 
+id INT NOT NULL AUTO_INCREMENT PRIMARY KEY, 
+firstName VARCHAR(30) NOT NULL, 
+lastName VARCHAR(30) NOT NULL, 
+role_id INT NOT NULL, 
+FOREIGN KEY (role_id)
+REFERENCES roles(id), 
+manager_id INT NOT NULL, 
+FOREIGN KEY (manager_id)
+REFERENCES emps(id)
+);
 

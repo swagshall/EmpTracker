@@ -102,9 +102,56 @@ const connection = mysql.createConnection(
 
   //----addEmps()------
   function addEmps() {
-      console.log("In addEmps()");
-  }
-
+      
+      connection.query("SELECT * FROM role", function (err, resRole) {
+        console.log("here")
+        connection.query(`SELECT employee.id, first_name, last_name FROM employee`,
+                inquirer
+                    .prompt([
+                        {
+                            name: "firstName",
+                            type: "input",
+                            message: "What is the employee's first name?"
+                        },
+                        {
+                            name: "lastName",
+                            type: "input",
+                            message: "What is the employee's last name?"
+                        },
+                        {
+                            name: "role",
+                            type: "list",
+                            message: "What is the employee's role?",
+                            choices: function () {
+                                roleArray = []
+                                for (var i = 0; i < resRole.length; i++) {
+                                    roleArray.push({ name: resRole[i].title, value: resRole[i].id }); // roleres
+                                }
+                               
+                                return roleArray;
+                            }
+                        }
+                    ])
+                  
+                    .then(function (answer) {
+                      
+                        connection.query(
+                            `INSERT INTO emps SET ?`,
+                            {
+                                first_name: answer.firstName,
+                                last_name: answer.lastName,
+                                role_id: answer.role,
+                            },
+                            function (err, resEmp) {
+                              if (err) throw err
+                              console.table(res)
+                              index();
+                            }
+                        );
+                          
+                    })) 
+                  })
+                }
   //----removeEmps()---
   function removeEmps() {
       console.log("In removeEmps()")
@@ -136,7 +183,7 @@ const connection = mysql.createConnection(
   function viewAllDeps() {
       console.log("In viewAllDeps()")
 
-      connection.query("SELECT id, name FROM departments;",
+      connection.query("SELECT * FROM departments;",
       function(err, res) {
         if (err) throw err
         console.table(res)
@@ -148,6 +195,26 @@ const connection = mysql.createConnection(
   //----addDep()-----
   function addDep() {
       console.log("In addDep()")
+      inquirer
+      .prompt({
+          name: "depName",
+          type: "input",
+          message: "What is the name of the new department?"
+      })
+
+      .then(function (answer) {
+          connection.query(
+              "INSERT INTO departments SET ?",
+              {
+                  name: answer.depName,
+              },
+              function (err, resEmp) {
+                if (err) throw err
+                console.table(res)
+                index();
+              }
+          );
+      });
   }
 
   //---removeDep()--

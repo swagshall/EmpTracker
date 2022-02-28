@@ -32,7 +32,7 @@ const connection = mysql.createConnection(
             type: "list",
             message: "What would you like to do?",
             choices: ["View All Employees","Add Employee",  "Remove an Employee", "Update Employee Role",  
-            "View All Roles", "Add a Role", "View all Departments", "Add a Department",  "Remove a Department", 
+            "View All Roles", "Add a Role", "View all Department", "Add Department",  "Remove a Department", 
             "View all Employees",  "Quit"]
         })
   .then(function(ans) {
@@ -62,7 +62,8 @@ const connection = mysql.createConnection(
             addRole();
         break;
 
-        case "View All Department":
+        case "View all Department":
+          console.log("hiiiii")
             viewAllDeps();
         break;
 
@@ -142,10 +143,10 @@ const connection = mysql.createConnection(
                                 last_name: answer.lastName,
                                 role_id: answer.role,
                             },
-                            function (err, resEmp) {
+                            function(err, res) {
                               if (err) throw err
                               console.table(res)
-                              index();
+                              index()
                             }
                         );
                           
@@ -208,10 +209,10 @@ const connection = mysql.createConnection(
               {
                   name: answer.depName,
               },
-              function (err, resEmp) {
+              function(err, res) {
                 if (err) throw err
                 console.table(res)
-                index();
+                index()
               }
           );
       });
@@ -222,9 +223,9 @@ const connection = mysql.createConnection(
       console.log("In removeDep()")
   }
 
-  //----addEmps()---
-  function addEmps() {
-      console.log("In addEmps()")
-  }
+  // //----addEmps()---
+  // function addEmps() {
+  //     console.log("In addEmps()")
+  // }
 
   

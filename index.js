@@ -32,7 +32,7 @@ function index() {
       type: "list",
       message: "What would you like to do?",
       choices: ["View All Employees", "Add Employee", "Remove Employee", "Update Employee Role",
-        "View All Roles", "Add Role", "View all Department", "Add Department", "Remove a Department",
+        "View All Roles", "Add Role", "View all Department", "Add Department", "Remove Department",
         "View all Employees", "Quit"]
     })
     .then(function (ans) {
@@ -307,10 +307,41 @@ function addDep() {
 //---removeDep()--
 function removeDep() {
   console.log("In removeDep()")
+
+  connection.query("SELECT * FROM departments", function (err, res) {
+    if (err) throw err;
+
+    inquirer
+        .prompt({
+            name: "remove",
+            type: "list",
+            message: "Which department would you like to remove?",
+            choices: function () {
+                var depArray = [];
+                for (var i = 0; i < res.length; i++) {
+                    depArray.push({ name: res[i].name, value: res[i].id });
+                }
+                return depArray;
+            }
+        })
+
+        .then(function (answer) {
+
+            connection.query(
+                "DELETE FROM departments WHERE ?",
+                {
+                    id: answer.remove
+                },
+
+                function(err, res) {
+                  if (err) throw err
+                  console.table(res)
+                  index()
+                }
+            );
+        });
+});
+  
 }
 
-  // //----addEmps()---
-  // function addEmps() {
-  //     console.log("In addEmps()")
-  // }
-
+ 

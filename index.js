@@ -32,7 +32,7 @@ function index() {
       type: "list",
       message: "What would you like to do?",
       choices: ["View All Employees", "Add Employee", "Remove an Employee", "Update Employee Role",
-        "View All Roles", "Add a Role", "View all Department", "Add Department", "Remove a Department",
+        "View All Roles", "Add Role", "View all Department", "Add Department", "Remove a Department",
         "View all Employees", "Quit"]
     })
     .then(function (ans) {
@@ -185,6 +185,50 @@ function viewAllRoles() {
 //----addRole()----
 function addRole() {
   console.log("In addRole()")
+  inquirer
+    .prompt([
+    {
+      name: "roleName",
+      type: "input",
+      message: "What is the name of the new role?"
+    },
+    {
+        name: "sal",
+        type: "input",
+        message: "What is the salary?"
+    },
+    // {
+    //   name: "depId",
+    //   type: "checkbox",
+    //   message: "Which department?" ,
+    //   choices: [
+    //     // connection.query("SELECT * FROM departments;")
+    //     "Sales",
+    //     "Engineering",
+    //     "Finance",
+    //     "Legal",
+    //     "HR",
+    //     "CEO",
+    //   ]
+    // }
+      
+   ] )
+
+    .then(function (answer) {
+      connection.query(
+        "INSERT INTO roles SET ?",
+        {
+          title: answer.roleName,
+          salary: answer.sal,
+          // dep_id: answer.depId,
+        },
+        function (err, res) {
+          if (err) throw err
+          console.table(res)
+          index()
+        }
+      );
+    });
 }
 
 //----viewAllDeps()---

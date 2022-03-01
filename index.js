@@ -31,7 +31,7 @@ function index() {
       name: "index",
       type: "list",
       message: "What would you like to do?",
-      choices: ["View All Employees", "Add Employee", "Remove an Employee", "Update Employee Role",
+      choices: ["View All Employees", "Add Employee", "Remove Employee", "Update Employee Role",
         "View All Roles", "Add Role", "View all Department", "Add Department", "Remove a Department",
         "View all Employees", "Quit"]
     })
@@ -163,7 +163,42 @@ function addEmps() {
 //----removeEmps()---
 function removeEmps() {
   console.log("In removeEmps()")
+
+  connection.query("SELECT * FROM emps", function (err, res) {
+    if (err) throw err;
+
+    inquirer
+        .prompt({
+            name: "remove",
+            type: "list",
+            message: "Which employee would you like to remove?",
+            choices: function () {
+                var employeeArray = [];
+                for (var i = 0; i < res.length; i++) {
+                    employeeArray.push({ name: res[i].firstName + " " + res[i].lastname, value: res[i].id });
+                }
+                return employeeArray;
+            }
+        })
+
+        .then(function (answer) {
+
+            connection.query(
+                "DELETE FROM emps WHERE ?",
+                {
+                    id: answer.remove
+                },
+
+                function(err, res) {
+                  if (err) throw err
+                  console.table(res)
+                  index()
+                }
+            );
+        });
+});
 }
+
 
 //----updateEmpRole()---
 function updateEmpRole() {

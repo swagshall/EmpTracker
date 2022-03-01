@@ -12,12 +12,12 @@ const connection = mysql.createConnection(
     password: 'Chemdas.1',
     database: 'emps_db'
   },
-  console.log(`Connected to the emps_db database.`)
+  // console.log(`Connected to the emps_db database.`)
 );
 
 connection.connect(function (err) {
   if (err) throw err
-  console.log("Connected as Id" + connection.threadId)
+  // console.log("Connected as Id" + connection.threadId)
   index();
 })
 
@@ -25,7 +25,7 @@ connection.connect(function (err) {
 
 //cre8ting the index function 
 function index() {
-  console.log('in menu funtion');
+  // console.log('in menu funtion');
   inquirer
     .prompt({
       name: "index",
@@ -39,7 +39,7 @@ function index() {
       switch (ans.index) {
         case "View All Employees":
           viewAllEmployees();
-          console.log("choice made")
+          // console.log("choice made")
           break;
 
         case "Add Employee":
@@ -63,7 +63,7 @@ function index() {
           break;
 
         case "View all Department":
-          console.log("hiiiii")
+          // console.log("hiiiii")
           viewAllDeps();
           break;
 
@@ -92,7 +92,7 @@ function index() {
 //functions for each switch case 
 //----viewAllEmployees()-----
 function viewAllEmployees() {
-  console.log("in viewAllEmployees()");
+  // console.log("in viewAllEmployees()");
   connection.query("SELECT emps.firstName, emps.lastName, roles.title, roles.salary, departments.name AS department, CONCAT(emps.firstName, ' ' ,emps.lastName) AS Manager FROM emps INNER JOIN roles on roles.id = emps.role_id INNER JOIN departments on departments.id = roles.dep_id left join emps e on emps.manager_id = e.id;",
     function (err, res) {
       if (err) throw err
@@ -106,10 +106,7 @@ function addEmps() {
 
   connection.query("SELECT * FROM roles", function (err, resRole) {
 
-    if (err) {
-      console.log
-    }
-    console.log("here")
+    // console.log("here")
 
              inquirer
                 .prompt([
@@ -162,7 +159,7 @@ function addEmps() {
 }
 //----removeEmps()---
 function removeEmps() {
-  console.log("In removeEmps()")
+  // console.log("In removeEmps()")
 
   connection.query("SELECT * FROM emps", function (err, res) {
     if (err) throw err;
@@ -175,7 +172,7 @@ function removeEmps() {
             choices: function () {
                 var employeeArray = [];
                 for (var i = 0; i < res.length; i++) {
-                    employeeArray.push({ name: res[i].firstName + " " + res[i].lastname, value: res[i].id });
+                    employeeArray.push({ name: res[i].firstName + " " + res[i].lastName, value: res[i].id });
                 }
                 return employeeArray;
             }
@@ -207,7 +204,7 @@ function updateEmpRole() {
 
 //----viewAllRoles()---
 function viewAllRoles() {
-  console.log("In viewAllRoles()")
+  // console.log("In viewAllRoles()")
 
   connection.query("SELECT id, title, salary FROM roles;",
     function (err, res) {
@@ -219,7 +216,7 @@ function viewAllRoles() {
 
 //----addRole()----
 function addRole() {
-  console.log("In addRole()")
+  // console.log("In addRole()")
   inquirer
     .prompt([
     {
@@ -268,7 +265,7 @@ function addRole() {
 
 //----viewAllDeps()---
 function viewAllDeps() {
-  console.log("In viewAllDeps()")
+  // console.log("In viewAllDeps()")
 
   connection.query("SELECT * FROM departments;",
     function (err, res) {
@@ -281,7 +278,7 @@ function viewAllDeps() {
 
 //----addDep()-----
 function addDep() {
-  console.log("In addDep()")
+  // console.log("In addDep()")
   inquirer
     .prompt({
       name: "depName",
@@ -306,7 +303,7 @@ function addDep() {
 
 //---removeDep()--
 function removeDep() {
-  console.log("In removeDep()")
+  // console.log("In removeDep()")
 
   connection.query("SELECT * FROM departments", function (err, res) {
     if (err) throw err;

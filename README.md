@@ -36,6 +36,10 @@
   ## Link 
     This application can be found on github: https://github.com/swagshall/EmpTracker/tree/main
 
-    For the deployed version follo this link: 
+
+  ## Demo:
+
+<img src=".\EmpTrackerDemoVid.gif" alt="screenshot 1">
+
 
 
